@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\VariationOption;
 
 class ProductController extends Controller
 {
@@ -15,12 +16,18 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        $variationOptions = VariationOption::with('values')->get();
+        return view('products.create', compact('variationOptions'));
     }
 
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
+        $product = Product::create($request->except('variations'));
+
+        if ($request->has('variations')) {
+            $product->variations()->attach($request->input('variations'));
+        }
+
         return redirect()->route('products.index');
     }
 

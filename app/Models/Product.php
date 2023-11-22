@@ -10,4 +10,8 @@ class Product extends Model
     protected $fillable = ['name', 'description', 'price'];
 
     use HasFactory;
+    public function variations()
+    {
+        return $this->belongsToMany(VariationValue::class, 'product_variation_value')->withPivot('price');
+    }
 }

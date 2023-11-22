@@ -24,6 +24,19 @@
                 <input type="text" class="form-control" name="price" required>
             </div>
 
+            <!-- Variation Options and Values -->
+            @foreach($variationOptions as $option)
+                <div class="mb-3">
+                    <label for="{{ $option->name }}" class="form-label">{{ $option->name }}:</label>
+                    <select multiple class="form-select" name="variations[]">
+                        <option value="" selected disabled>Select {{ $option->name }}</option>
+                        @foreach($option->values as $value)
+                            <option value="{{ $value->id }}">{{ $value->value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endforeach
+
             <button type="submit" class="btn btn-success">Create Product</button>
         </form>
 
