@@ -15,6 +15,8 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -75,6 +77,16 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <p>Click on this paragraph.</p>
+
     </div>
+    @stack('js')
+    <script>
+        $(document).ready(function(){
+          $("p").click(function(){
+            alert("The paragraph was clicked.");
+          });
+        });
+        </script>
 </body>
 </html>
