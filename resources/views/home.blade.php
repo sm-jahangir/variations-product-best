@@ -9,7 +9,8 @@
 
                 <div class="card-body">
                    
-
+                    <a class="btn btn-primary" href="{{ route('products.create') }}">Product Create</a>
+                    <a class="btn btn-primary" href="{{ route('products.index') }}">Product</a>
                 </div>
             </div>
         </div>
