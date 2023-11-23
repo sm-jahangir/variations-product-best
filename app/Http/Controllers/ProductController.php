@@ -10,14 +10,20 @@ class ProductController extends Controller
 {
     public function index()
     {
+        // return $products = Product::with('variations')->get();
+        // return $products = Product::with('variations')->findOrFail(2);
         $products = Product::all();
         return view('products.index', compact('products'));
     }
 
     public function show($id)
     {
-        return $product = Product::with('variations')->findOrFail($id);
-        return view('products.show', compact('product'));
+        // return $product = Product::with('formattedVariations')->find($id);
+
+        $product = Product::with('variations')->findOrFail($id);
+        // Call the groupedByOption method to get variations grouped by option_id
+        $groupedVariations = $product->groupedByOption();
+        return view('products.show', compact('product', 'groupedVariations'));
     }
 
     public function create()

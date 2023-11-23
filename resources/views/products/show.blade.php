@@ -1,25 +1,44 @@
 <!-- resources/views/products/show.blade.php -->
 
-@extends('layouts.app')
+@extends('layouts.app') <!-- Assuming you have a layout file -->
 
 @section('content')
-    <div class="container mt-5">
-        <h2 class="mb-4">Product Details</h2>
+    <div class="container">
+        <div class="product-container">
+            <div class="product-image">
+                <img src="{{ asset('path/to/product-image.jpg') }}" alt="Product Image" class="img-fluid">
+            </div>
+            <div class="product-details">
+                <div class="product-title">{{ $product->name }}</div>
+                <div class="product-description">
+                    {{ $product->description }}
+                </div>
+                <div class="product-price">${{ $product->price }}</div>
+                <div class="add-to-cart">
+                    <input type="number" class="quantity-input form-control" value="1" min="1">
+                    <button class="btn btn-primary">Add to Cart</button>
+                </div>
+                <div class="product-actions">
+                    <!-- Additional product actions (e.g., wishlist, share) can be added here -->
+                    <button class="btn btn-outline-secondary">Add to Wishlist</button>
+                    <button class="btn btn-outline-secondary">Share</button>
+                </div>
+            </div>
+        </div>
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ $product->name }}</h5>
-                <p class="card-text">{{ $product->description }}</p>
-
-                <h6 class="mt-3">Variations:</h6>
+        <!-- Display grouped variations -->
+        <div class="grouped-variations">
+            <h2>Variations</h2>
+            @foreach($groupedVariations as $group)
+                <h3>{{ $group['option']->name }}</h3>
                 <ul>
-                    @foreach($product->variations as $variation)
-                        <li>{{ $variation->name }}: {{ $variation->pivot->price }}</li>
+                    @foreach($group['values'] as $value)
+                        <li>
+                            {{ $value['value_name'] }} - ${{ $value['price'] }}
+                        </li>
                     @endforeach
                 </ul>
-
-                <a href="{{ route('products.index') }}" class="btn btn-secondary mt-3">Back to Product List</a>
-            </div>
+            @endforeach
         </div>
     </div>
 @endsection
