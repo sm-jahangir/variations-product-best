@@ -14,6 +14,10 @@ class Product extends Model
     {
         return $this->belongsToMany(VariationValue::class, 'product_variation_value')->withPivot('price');
     }
+
+
+
+
     // Group variations by option_id
     public function groupedByOption()
     {
@@ -36,7 +40,40 @@ class Product extends Model
                     }),
                 ];
             });
-
         return $variationsByOption->values(); // Re-index the array
     }
+
+    // // Product with variations group by option_id
+    // public function groupedByOption()
+    // {
+    //     $product = $this->load('variations'); // Eager load the variations relationship
+
+    //     $variationsByOption = $product->variations
+    //         ->groupBy('option_id')
+    //         ->map(function ($values, $optionId) {
+    //             $option = VariationOption::find($optionId);
+
+    //             return [
+    //                 'option_id' => $optionId,
+    //                 'option' => $option, // Include the option details
+    //                 'values' => $values->map(function ($value) {
+    //                     return [
+    //                         'value_id' => $value->id,
+    //                         'value_name' => $value->value,
+    //                         'price' => $value->pivot->price,
+    //                     ];
+    //                 }),
+    //             ];
+    //         })
+    //         ->values() // Re-index the outer array
+    //         ->toArray();
+
+    //     return [
+    //         'product' => $product,
+    //         'variations' => $variationsByOption,
+    //     ];
+    // }
+
+
+
 }
